@@ -1,13 +1,13 @@
-package com.example.collabeditor;
+package com.example.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CollabEditorApplication {
+public class Auth {
 
     public static void main(String[] args) {
-        SpringApplication.run(CollabEditorApplication.class, args);
+        SpringApplication.run(Auth.class, args);
     }
 }
 

@@ -45,4 +45,11 @@ public class UserService {
         return repo.findByUsername(username);
     }
 
+    public Iterable<User> getAllUsers() {
+        return repo.findAll();
+    }
+
+    public Iterable<User> findByUsernameStartingWith(String username) {
+        return repo.findByUsernameStartingWith(username);
+    }
 }

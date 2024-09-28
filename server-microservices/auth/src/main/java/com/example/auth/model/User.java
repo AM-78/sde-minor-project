@@ -6,19 +6,22 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
+@Table(name = "\"USER\"")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id ;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(unique = true)
-    public String username;
+    private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    public String password;
+    private String password;
 
 
 

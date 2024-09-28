@@ -8,17 +8,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class UserController {
 
     @Autowired
     private UserService service;
-
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
@@ -39,6 +38,16 @@ public class UserController {
     public User getUser(HttpServletRequest request){
         String username = (String) request.getAttribute("username");
         return service.getUser(username);
+    }
+
+    @GetMapping("/get-all-users")
+    public Iterable<User> getAllUsers(){
+        return service.getAllUsers();
+    }
+
+    @GetMapping("/search-by-username")
+    public Iterable<User> getUserByUsername(@RequestParam String username){
+        return service.findByUsernameStartingWith(username);
     }
 
     @GetMapping("/test")

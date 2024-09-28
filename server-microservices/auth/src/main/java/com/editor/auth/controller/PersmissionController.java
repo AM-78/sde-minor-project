@@ -5,10 +5,12 @@ import com.editor.auth.model.Permission;
 import com.editor.auth.model.User;
 import com.editor.auth.repository.PermissionRepo;
 import com.editor.auth.repository.UserRepo;
+import com.editor.auth.service.PermissionService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +23,9 @@ public class PersmissionController {
     @Autowired
     private ApiKeysConfig apiKeysConfig;
 
+
     @Autowired
-    private PermissionRepo permissionRepo;
+    private PermissionService permissionService;
 
     @Autowired
     private UserRepo userRepo;
@@ -33,21 +36,8 @@ public class PersmissionController {
         if (!apiKeysConfig.getKeys().containsKey(apiKey)) {
             return new ResponseEntity<>("Invalid API Key", HttpStatus.UNAUTHORIZED);
         }
-
-        for (Map<String,String> permissionRequest : permissionRequests) {
-            String username = permissionRequest.get("username");
-            UUID docId = UUID.fromString(permissionRequest.get("docId"));
-            int canWrite = permissionRequest.get("canWrite").equals("1") ? 1 : 0;
-
-            User user = userRepo.findByUsername(username);
-            if (user != null) {
-                Permission permission = permissionRepo.findByUserIdAndDocId(user.getId(), docId)
-                        .orElse(new Permission(user, docId, canWrite));
-                permission.setCanWrite(canWrite);
-                permissionRepo.save(permission);
-            }
-        }
-        return new ResponseEntity<>("Permission added for successfully", HttpStatus.UNAUTHORIZED);
+        permissionService.addPermission(permissionRequests);
+        return new ResponseEntity<>("Permission added for valid Users successfully", HttpStatus.CREATED);
     }
 
     @PostMapping("/remove-user-from-document")
@@ -61,12 +51,13 @@ public class PersmissionController {
         String username = requestBody.get("username");
         UUID docId = UUID.fromString(requestBody.get("docId"));
 
-        User user = userRepo.findByUsername(username);
-        if (user != null) {
-            permissionRepo.deleteByUserIdAndDocId(user.getId(), docId);
-            return new ResponseEntity<>("Permission removed for successfully", HttpStatus.UNAUTHORIZED);
+        try{
+            permissionService.removePermission(username, docId);
+            return new ResponseEntity<>("Permission removed successfully", HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>("User not found", HttpStatus.UNAUTHORIZED);
+        catch (UsernameNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
     }
 
 
@@ -76,6 +67,7 @@ public class PersmissionController {
         if (!apiKeysConfig.getKeys().containsKey(apiKey)) {
             return new ResponseEntity<>("Invalid API Key", HttpStatus.UNAUTHORIZED);
         }
-        return (ResponseEntity<?>) (permissionRepo.findByDocId(docId));
+        Iterable<Permission> permissions= permissionService.getPermissions(docId);
+        return (ResponseEntity<?>) (permissions);
     }
 }

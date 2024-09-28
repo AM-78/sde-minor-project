@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @IdClass(PermissionId.class)
-@Table(name = "PERMISSION")
+@Table(name = "\"PERMISSION\"")
 @Getter
 @Setter
 public class Permission {

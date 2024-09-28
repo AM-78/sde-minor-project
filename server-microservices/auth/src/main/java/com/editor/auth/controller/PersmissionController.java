@@ -1,24 +1,22 @@
-package com.example.auth.controller;
+package com.editor.auth.controller;
 
-import com.example.auth.config.ApiKeysConfig;
-import com.example.auth.model.Permission;
-import com.example.auth.model.User;
-import com.example.auth.repository.PermissionRepo;
-import com.example.auth.repository.UserRepo;
+import com.editor.auth.config.ApiKeysConfig;
+import com.editor.auth.model.Permission;
+import com.editor.auth.model.User;
+import com.editor.auth.repository.PermissionRepo;
+import com.editor.auth.repository.UserRepo;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @RestController("/permission")
+@CrossOrigin
 public class PersmissionController {
     @Autowired
     private ApiKeysConfig apiKeysConfig;

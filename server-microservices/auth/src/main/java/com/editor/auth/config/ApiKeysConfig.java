@@ -1,4 +1,4 @@
-package com.example.auth.config;
+package com.editor.auth.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

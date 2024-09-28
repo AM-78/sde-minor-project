@@ -1,9 +1,9 @@
-package com.example.auth.service;
+package com.editor.auth.service;
 
 
-import com.example.auth.exception.UsernameAlreadyExistsException;
-import com.example.auth.model.User;
-import com.example.auth.repository.UserRepo;
+import com.editor.auth.exception.UsernameAlreadyExistsException;
+import com.editor.auth.model.User;
+import com.editor.auth.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

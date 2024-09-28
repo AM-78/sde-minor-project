@@ -1,7 +1,7 @@
-package com.example.auth.config;
+package com.editor.auth.config;
 
-import com.example.auth.service.JWTService;
-import com.example.auth.service.MyUserDetailService;
+import com.editor.auth.service.JWTService;
+import com.editor.auth.service.MyUserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,16 +1,14 @@
-package com.example.auth.controller;
+package com.editor.auth.controller;
 
 
-import com.example.auth.exception.UsernameAlreadyExistsException;
-import com.example.auth.service.UserService;
-import com.example.auth.model.User;
+import com.editor.auth.exception.UsernameAlreadyExistsException;
+import com.editor.auth.service.UserService;
+import com.editor.auth.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @CrossOrigin

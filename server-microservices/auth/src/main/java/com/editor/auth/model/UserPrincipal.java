@@ -1,4 +1,4 @@
-package com.example.auth.model;
+package com.editor.auth.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

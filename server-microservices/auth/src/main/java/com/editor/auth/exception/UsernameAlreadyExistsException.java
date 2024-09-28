@@ -1,4 +1,4 @@
-package com.example.auth.exception;
+package com.editor.auth.exception;
 
 public class UsernameAlreadyExistsException extends Throwable {
     public UsernameAlreadyExistsException(String usernameAlreadyExists) {

@@ -83,17 +83,6 @@ public class EditService {
     }
 
     public List<Edit> read(UUID docId, int version) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<Edit> edits = editRepo.findByDocIdAndVersionGreaterThan(docId, version);
-        for (Edit edit : edits) {
-            try {
-                List<String> contentList = objectMapper.readValue(edit.getContent(), new TypeReference<List<String>>() {});
-                edit.setContent(objectMapper.writeValueAsString(contentList));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return edits;
+        return editRepo.findByDocIdAndVersionGreaterThan(docId, version);
     }
 }

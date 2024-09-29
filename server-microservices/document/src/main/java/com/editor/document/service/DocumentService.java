@@ -10,10 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,10 +42,6 @@ public class DocumentService {
         }
     }
 
-    public List<Document> getMyDocs(UUID ownerId) {
-        return documentRepo.findByOwnerId(ownerId);
-    }
-
     public boolean isOwner(UUID docId, UUID ownerId) {
         Optional<Document> optionalDocument = documentRepo.findById(docId);
         if (optionalDocument.isPresent()) {
@@ -56,10 +49,6 @@ public class DocumentService {
             return document.getOwnerId().toString().equals(ownerId.toString());
         }
         return false;
-    }
-
-    public List<Document> getAllDocs() {
-        return documentRepo.findAll();
     }
 
 
@@ -109,9 +98,13 @@ public class DocumentService {
             System.out.println("Success from auth............");
             return (List<Document>) response.getBody().stream()
                     .map((docId) -> documentRepo.findById(UUID.fromString(docId.toString())).get())
+                    .sorted(Comparator.comparing(Document::getCreationTime).reversed())
                     .collect(Collectors.toList());
-//            return documentRepo.findByOwnerId(UUID.fromString(userId));
         }
         throw new Exception("Failed to add users");
+    }
+
+    public List<Document> getMyDocs(UUID ownerId) {
+        return documentRepo.findByOwnerIdOrderByCreationTimeDesc(ownerId);
     }
 }

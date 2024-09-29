@@ -47,11 +47,6 @@ public class DocumentController {
         return documentService.getMyDocs(ownerId);
     }
 
-    @GetMapping("/get-all-docs")
-    public List<Document> getAllDocs() {
-        return documentService.getAllDocs();
-    }
-
 
     @PostMapping("/add-users/{docId}")
     public ResponseEntity<String> addUsers(@PathVariable String docId,@RequestBody Map<String,String> requestBody, HttpServletRequest request) {

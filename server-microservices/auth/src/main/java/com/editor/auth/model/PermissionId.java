@@ -10,15 +10,15 @@ import java.util.Objects;
 @Getter
 @Setter
 public class PermissionId implements Serializable {
-    private UUID user;
+    private UUID userId;
     private UUID docId;
 
     // Default constructor
     public PermissionId() {}
 
     // Parameterized constructor
-    public PermissionId(UUID user, UUID docId) {
-        this.user = user;
+    public PermissionId(UUID userId, UUID docId) {
+        this.userId = userId;
         this.docId = docId;
     }
 
@@ -29,11 +29,11 @@ public class PermissionId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PermissionId that = (PermissionId) o;
-        return Objects.equals(user, that.user) && Objects.equals(docId, that.docId);
+        return Objects.equals(userId, that.userId) && Objects.equals(docId, that.docId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, docId);
+        return Objects.hash(userId, docId);
     }
 }

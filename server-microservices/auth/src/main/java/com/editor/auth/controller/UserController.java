@@ -1,7 +1,6 @@
 package com.editor.auth.controller;
 
 
-import com.editor.auth.exception.UsernameAlreadyExistsException;
 import com.editor.auth.service.UserService;
 import com.editor.auth.model.User;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -22,7 +23,7 @@ public class UserController {
         try {
             User createdUser = service.register(user);
             return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-        } catch (UsernameAlreadyExistsException e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
@@ -34,8 +35,8 @@ public class UserController {
 
     @GetMapping("/get-user")
     public User getUser(HttpServletRequest request){
-        String username = (String) request.getAttribute("username");
-        return service.getUser(username);
+        UUID userId = (UUID) request.getAttribute("user_id");
+        return service.getUser(userId);
     }
 
     @GetMapping("/get-all-users")

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PermissionService {
@@ -21,31 +23,45 @@ public class PermissionService {
     @Autowired
     private UserRepo userRepo;
 
-    public void addPermission(List<Map<String,String>> permissionRequests) {
-        for (Map<String,String> permissionRequest : permissionRequests) {
-            String username = permissionRequest.get("username");
-            UUID docId = UUID.fromString(permissionRequest.get("docId"));
-            int canWrite = permissionRequest.get("canWrite").equals("1") ? 1 : 0;
-
+    public void addPermission(String docId, Map<String,String> permissionRequests) {
+        permissionRequests.forEach((username, canWrite) -> {
             User user = userRepo.findByUsername(username);
             if (user != null) {
-                Permission permission = permissionRepo.findByUserIdAndDocId(user.getId(), docId)
-                        .orElse(new Permission(user, docId, canWrite));
-                permission.setCanWrite(canWrite);
+                Permission permission = permissionRepo.findByUserIdAndDocId(user.getId(), UUID.fromString(docId))
+                        .orElse(new Permission(user.getId(), UUID.fromString(docId), "1".equals(canWrite) ? 1 : 0));
+                permission.setCanWrite("1".equals(canWrite) ? 1 : 0);
                 permissionRepo.save(permission);
             }
-        }
+        });
     }
 
-    public void removePermission(String username, UUID docId) {
+    public void removePermission(String username, UUID docId) throws Exception {
         User user = userRepo.findByUsername(username);
         if(user == null) {
-            throw new UsernameNotFoundException("User not found");
+            throw new Exception("User not found");
         }
         permissionRepo.deleteByUserIdAndDocId(user.getId(), docId);
     }
 
     public Iterable<Permission> getPermissions(UUID docId) {
         return permissionRepo.findByDocId(docId);
+    }
+
+    public List<UUID> getSharedDocuments(UUID uuid) {
+
+        List<Permission> permissions =  permissionRepo.findByUserId(uuid);
+        return permissions.stream()
+                .map(Permission::getDocId)
+                .collect(Collectors.toList());
+    }
+
+    public boolean canWrite(String userId, UUID docId) {
+        Permission permission = permissionRepo.findByUserIdAndDocId(UUID.fromString(userId), docId).orElse(null);
+        return permission != null && permission.getCanWrite() == 1;
+    }
+
+    public boolean canRead(String userId, UUID docId) {
+        Permission permission = permissionRepo.findByUserIdAndDocId(UUID.fromString(userId), docId).orElse(null);
+        return permission != null;
     }
 }

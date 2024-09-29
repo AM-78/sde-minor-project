@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 public interface PermissionRepo extends JpaRepository<Permission,Integer> {
     List<Permission> findByUserId(UUID userId);
-    List<Permission> findByDocId(UUID docId);
+    Iterable<Permission> findByDocId(UUID docId);
     Optional<Permission> findByUserIdAndDocId(UUID userId, UUID docId);
     void deleteByUserIdAndDocId(UUID userId, UUID docId);
 

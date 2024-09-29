@@ -6,6 +6,21 @@ spring:
     discovery:
       enabled: true
     gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: false
+            maxAge: 3600
+
       discovery:
         locator:
           enabled: true
@@ -24,6 +39,10 @@ spring:
           uri: lb://WRITER
           predicates:
             - Path=/writer/**
+        - id: DOCUMENT
+          uri: lb://DOCUMENT
+          predicates:
+            - Path=/document/**
 
 server:
   port: 8080

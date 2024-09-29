@@ -1,14 +1,14 @@
 server:
-  port: 8001
+  port: 8002
 
 api:
   keys:
-    document-service: your-document-service-key
+    auth-service: auth-document-service-key
     writer-service: your-writer-service-key
 
 spring:
   application:
-    name: auth
+    name: document
 
   security:
     user:
@@ -34,6 +34,7 @@ spring:
     username: root
     password: naman
 
+
 eureka:
   instance:
     hostname: 127.0.0.1
@@ -41,6 +42,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+
 
 
 

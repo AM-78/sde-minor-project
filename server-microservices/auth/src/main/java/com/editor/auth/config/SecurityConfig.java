@@ -33,8 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);
-        http.authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll());
-        http.authorizeHttpRequests(requests -> requests.requestMatchers("/register","/login","/test").permitAll());
+        http.authorizeHttpRequests(requests -> requests.requestMatchers("/register","/login","/test","/permission/**","/jwt/**").permitAll());
         http.authorizeHttpRequests(requests -> requests.anyRequest().authenticated());
         http.httpBasic(Customizer.withDefaults());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

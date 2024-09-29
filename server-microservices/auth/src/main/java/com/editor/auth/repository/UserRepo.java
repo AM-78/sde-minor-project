@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public interface UserRepo extends JpaRepository<User,Integer> {
@@ -16,4 +17,6 @@ public interface UserRepo extends JpaRepository<User,Integer> {
 
     @Query("SELECT u FROM User u WHERE u.username LIKE :prefix%")
     List<User> findByUsernameStartingWith(@Param("prefix") String prefix);
+
+    User findById(UUID userId);
 }

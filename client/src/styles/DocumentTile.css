@@ -1,0 +1,26 @@
+.document-tile {
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 8px;
+    margin: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 100px;
+}
+
+.document-tile:hover {
+    cursor: pointer;
+    filter: brightness(0.9);
+    transform: scale(1.02);
+}
+
+.document-tile h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.document-tile p {
+    margin: 25px 0 0;
+    font-size: 14px;
+    color: #666;
+}

@@ -1,0 +1,46 @@
+.document-page {
+    width: 100vw;
+}
+
+.document-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 20px;
+    width: 300px;
+}
+
+.document-buttons button {
+    width: 120px;
+}
+
+
+.title {
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.editable-title {
+    font-size: 2em;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    padding: 0.2rem;
+    outline: none;
+    width: auto;
+    margin-bottom: 1rem;
+}
+
+.editable-title:focus {
+    border-color: #007bff;
+}
+
+.document-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    margin-left: 20px;
+}

@@ -1,0 +1,48 @@
+.editor {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#editor {
+    height: 600px;
+    width: 80%;
+    margin-top: 10px;
+    border: 1px solid black;
+    background-color: white;
+    font-size: 16px;
+}
+
+
+.ql-size-10px {
+    font-size: 10px;
+}
+
+.ql-size-12px {
+    font-size: 12px;
+}
+
+.ql-size-14px {
+    font-size: 14px;
+}
+
+.ql-size-16px {
+    font-size: 16px;
+}
+
+.ql-size-18px {
+    font-size: 18px;
+}
+
+.ql-size-24px {
+    font-size: 24px;
+}
+
+.ql-size-32px {
+    font-size: 32px;
+}
+
+.ql-size-48px {
+    font-size: 48px;
+}

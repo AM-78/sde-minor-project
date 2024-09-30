@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.Doc;
+import java.net.URI;
 import java.util.*;
 
 @RestController
@@ -91,7 +91,10 @@ public class DocumentController {
 
 
     @GetMapping("/test")
-    public String test(){
-        return "Document Service Test";
+    public URI test(){
+
+        System.out.println(documentService.getServiceInstanceIp("gateway"));
+        return documentService.getServiceInstanceIp("gateway");
+//        return "Document Service Test";
     }
 }

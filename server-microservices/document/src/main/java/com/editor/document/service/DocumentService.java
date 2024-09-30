@@ -3,6 +3,8 @@ package com.editor.document.service;
 import com.editor.document.model.Document;
 import com.editor.document.repository.DocumentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,6 +24,20 @@ public class DocumentService {
 
     @Autowired
     private DocumentRepo documentRepo;
+
+    @Autowired
+    private DiscoveryClient d;
+
+    public URI getServiceInstanceIp(String serviceId) {
+        List<ServiceInstance> instances = d.getInstances(serviceId);
+
+        if (instances != null && !instances.isEmpty()) {
+            ServiceInstance instance = instances.get(0); // Get the first instance
+            return instance.getUri(); // Returns the IP address of the service
+        } else {
+            throw new RuntimeException("No instances found for service: " + serviceId);
+        }
+    }
 
     public Document createDoc(UUID ownerId) {
         Document document = new Document();
@@ -53,7 +70,7 @@ public class DocumentService {
 
 
     public String addUsers(UUID docId, Map<String,String> bodyData) throws Exception {
-        String url = "http://localhost:8080/auth/permission/add-user-to-document/"+docId;
+        String url = getServiceInstanceIp("gateway").toString()+"/auth/permission/add-user-to-document/"+docId;
         HttpHeaders headers = new HttpHeaders();
         headers.set("api-key", "your-document-service-key");
 
@@ -69,7 +86,7 @@ public class DocumentService {
     }
 
     public String removeUser(String docId, String username) throws Exception {
-        String url = "http://localhost:8080/auth/permission/remove-user-to-document/";
+        String url = getServiceInstanceIp("gateway").toString()+"/auth/permission/remove-user-to-document/";
         HttpHeaders headers = new HttpHeaders();
         headers.set("api-key", "your-document-service-key");
 
@@ -88,7 +105,7 @@ public class DocumentService {
     }
 
     public List<Document> getSharedDocuments(String userId) throws Exception {
-        String url = "http://localhost:8080/auth/permission/shared-documents";
+        String url = getServiceInstanceIp("gateway").toString()+"/auth/permission/shared-documents";
         HttpHeaders headers = new HttpHeaders();
         headers.set("api-key", "your-document-service-key");
         headers.set("x-user-id", userId);

@@ -1,0 +1,73 @@
+version: '3.8'  # Version of Docker Compose file format
+
+services:
+  # Eureka Service
+  eureka:
+    build: ./eureka  # Assuming Dockerfile is in eureka folder
+    container_name: eureka
+    ports:
+      - "8761:8761"  # Port for Eureka service
+    networks:
+      - microservices-network
+
+  # Auth Service
+  auth:
+    build: ./auth  # Assuming Dockerfile is in auth folder
+    container_name: auth
+    ports:
+      - "8001:8001"  # Replace with the correct port for the auth service
+    depends_on:
+      - eureka  
+    networks:
+      - microservices-network
+    # command: ["wait-for-it", "eureka:8761", "--", "java", "-jar", "/app/your-application.jar"]  # Update with your JAR file
+
+  # Gateway Service
+  gateway:
+    build: ./gateway  # Assuming Dockerfile is in gateway folder
+    container_name: gateway
+    ports:
+      - "8080:8080"  # Port for the gateway service
+    depends_on:
+      - eureka  
+    networks:
+      - microservices-network
+    # command: ["wait-for-it", "eureka:8761", "--", "java", "-jar", "/app/your-application.jar"]  # Update with your JAR file
+
+  # Document Service
+  document:
+    build: ./document  # Assuming Dockerfile is in document folder
+    container_name: document
+    ports:
+      - "8002:8002"  # Replace with the correct port for the document service
+    depends_on:
+      - eureka  
+    networks:
+      - microservices-network
+
+  # Writer Service
+  writer:
+    build: ./writer  # Assuming Dockerfile is in writer folder
+    container_name: writer
+    ports:
+      - "8003:8003"  # Replace with the correct port for the writer service
+    depends_on:
+      - eureka  
+    networks:
+      - microservices-network
+
+  # Frontend Service
+  frontend:
+    build: ./../client
+    container_name: frontend
+    ports:
+      - "80:80"
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge  # Default network driver is bridge
+
+volumes:
+  mysql-data:

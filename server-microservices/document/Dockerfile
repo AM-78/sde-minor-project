@@ -11,11 +11,10 @@ COPY target/document-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8002
 
 # Set the environment variable for the Eureka host, port
-ENV EUREKA_URL=172.31.91.243:8761
-ENV DB_URL=jdbc:mysql://172.31.91.243:3306/TEMP?autoReconnect=true
-ENV DB_USERNAME=root
-ENV DB_PASSWORD=naman
-
+# ENV EUREKA_URL=http://eureka:8761/eureka/
+# ENV DB_URL=jdbc:mysql://34.93.102.202/TEMP?autoReconnect=true
+# ENV DB_USERNAME=root
+# ENV DB_PASSWORD=naman
 
 # Run the jar file
 ENTRYPOINT ["java", "-jar", "app.jar"]

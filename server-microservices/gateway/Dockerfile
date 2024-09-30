@@ -11,8 +11,7 @@ COPY target/gateway-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 
 # Set the environment variable for the Eureka host, port
-ENV EUREKA_URL=172.31.91.243:8761
-
+# ENV EUREKA_URL=http://172.31.91.243:8761/eureka/
 
 
 # Run the jar file

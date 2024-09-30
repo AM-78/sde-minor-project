@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping("/get-user")
     public User getUser(HttpServletRequest request){
-        UUID userId = (UUID) request.getAttribute("user_id");
+        UUID userId = UUID.fromString((String) request.getAttribute("user_id"));
         return service.getUser(userId);
     }
 

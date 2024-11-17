@@ -9,6 +9,8 @@ services:
       - "8761:8761"  # Port for Eureka service
     networks:
       - microservices-network
+    env_file:
+      - ./.env
 
   # Auth Service
   auth:
@@ -20,6 +22,8 @@ services:
       - eureka  
     networks:
       - microservices-network
+    env_file:
+      - ./.env
     # command: ["wait-for-it", "eureka:8761", "--", "java", "-jar", "/app/your-application.jar"]  # Update with your JAR file
 
   # Gateway Service
@@ -32,6 +36,8 @@ services:
       - eureka  
     networks:
       - microservices-network
+    env_file:
+      - ./.env
     # command: ["wait-for-it", "eureka:8761", "--", "java", "-jar", "/app/your-application.jar"]  # Update with your JAR file
 
   # Document Service
@@ -44,6 +50,9 @@ services:
       - eureka  
     networks:
       - microservices-network
+    env_file:
+      - ./.env
+    
 
   # Writer Service
   writer:
@@ -55,7 +64,8 @@ services:
       - eureka  
     networks:
       - microservices-network
-
+    env_file:
+      - ./.env
   # Frontend Service
   frontend:
     build: ./../client
@@ -64,7 +74,9 @@ services:
       - "80:80"
     networks:
       - microservices-network
-
+    env_file:
+      - ./.env
+      
 networks:
   microservices-network:
     driver: bridge  # Default network driver is bridge

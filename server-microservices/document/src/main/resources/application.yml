@@ -30,16 +30,16 @@ spring:
 #      show-sql: true
 
   datasource:
-    url: jdbc:mysql://172.31.91.243/TEMP?autoReconnect=true
-    username: root
-    password: naman
+    url: ${JDBC_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
 eureka:
   instance:
-     prefer-ip-address: true
+    prefer-ip-address: true 
   client:
     service-url:
-      defaultZone: http://172.31.91.243:8761/eureka/
+      defaultZone: ${EUREKA_URL}
       
 
 

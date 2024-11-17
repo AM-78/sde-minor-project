@@ -4,7 +4,7 @@ const getToken = () => {
     return localStorage.getItem('token');
 };
 
-const API_URL = 'http://172.31.91.243:8080';
+const API_URL = 'http://172.31.74.124:8080';
 
 
 const axiosInstance = axios.create({

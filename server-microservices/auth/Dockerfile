@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy the packaged jar file to the container
 COPY target/auth-0.0.1-SNAPSHOT.jar app.jar
 
+
+
+RUN echo $JDBC_URL
 # Expose the port the app runs on
 EXPOSE 8001
 

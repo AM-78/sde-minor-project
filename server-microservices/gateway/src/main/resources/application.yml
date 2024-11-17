@@ -52,4 +52,4 @@ eureka:
     prefer-ip-address: true 
   client:
     serviceUrl:
-      defaultZone: http://172.31.91.243:8761/eureka/
+      defaultZone: ${EUREKA_URL}
